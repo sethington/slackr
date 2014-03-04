@@ -1,0 +1,32 @@
+{
+	"port": 3001,
+	"slack":
+	{
+		"domain":"[INSERT YOUR DOMAIN HERE]",
+		"token": "[INSERT YOUR TOKEN HERE]",
+		"path":"/services/hooks/incoming-webhook?token="
+	},
+	"integrations":
+	{
+		"bitbucket": 
+		{
+			"routes":
+			[
+				{
+					"path": "/pr/created",
+					"channel": "#bitbucket",
+					"emoji": ":ghost:",
+					"template": "bitbucket/created.hbs",
+					"username":"Bitbucket"
+				},
+				{
+					"path": "/pr/approved",
+					"channel": "#bitbucket",
+					"icon": "https://slack.global.ssl.fastly.net/10800/img/services/bitbucket_48.png",
+					"template": "bitbucket/approved.hbs",
+					"username":"Bitbucket"
+				}
+			]
+		}
+	}
+}
