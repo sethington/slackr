@@ -21,4 +21,4 @@ The translations are created using the Handlebars templating engine. The templat
 
 npm install  
 npm install forever -g  
-forever app.js  
+forever start app.js  
