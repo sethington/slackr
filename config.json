@@ -2,8 +2,8 @@
 	"port": 3001,
 	"slack":
 	{
-		"domain":"[INSERT YOUR DOMAIN HERE]",
-		"token": "[INSERT YOUR TOKEN HERE]",
+		"domain":"yoursubdomainhere.slack.com",
+		"token": "INSERT YOUR SLACK WEBHOOK TOKEN HERE",
 		"path":"/services/hooks/incoming-webhook?token="
 	},
 	"integrations":
