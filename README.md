@@ -8,7 +8,7 @@ The config.json file in the root folder will need to be updated to point to your
 Listeners can be defined in config.json under the "integrations" array. Define each of your integrations and all of the routes and templates associated with them.
 
 route schema:
-* **path** The path to listen for webhooks on. If the integration is called 'github' and the route path is set to '/commits', the service will listen on http://yourserver:port/github/commits.
+* **path** The path to listen for webhooks on. If the integration is called 'github' and the route path is set to '/commits', the service will listen on http://yourserver:port/github/commits
 * **channel** The Slack channel to post to
 * **template** Path to the handlebars template to translate on
 * **emoji _(optional)_** The slack emoji to show in the channel
