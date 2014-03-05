@@ -2,7 +2,7 @@
 ---
 Middleware to translate incoming POST Webhooks from any service and send the request on to Slack in its accepted format.  
 
-Will also listen on /slack for any outgoing webhooks from Slack and react to those commands as defined in config.json
+Will also listen on /slackr for any outgoing webhooks from Slack and react to those commands as defined in config.json
 
 Pull requests, issues and feature requests all welcome.
 
@@ -23,7 +23,7 @@ The translations are created using the Handlebars templating engine. The templat
 
 ### Configuration - Outgoing Webhooks
 
-The 'slack' array in config.json can be used to define modules you want to load in and listen for commands on from Slack. You will need to add an 'Outgoing Webhook' service integration setup in your slack instance with the trigger words you want ('xkcd' to work with the default module in Slackr). Add your Slackr instance to the URL field (http://yourserver:port/slack) and copy the token that gets created into the 'outgoing_webhook_token' config variable.
+The 'slack' array in config.json can be used to define modules you want to load in and listen for commands on from Slack. You will need to add an 'Outgoing Webhook' service integration setup in your slack instance with the trigger words you want ('xkcd' to work with the default module in Slackr). Add your Slackr instance to the URL field (http://yourserver:port/slackr) and copy the token that gets created into the 'outgoing_webhook_token' config variable.
 
 slack config schema:
 * **regex** The regex to match on in order to call the module below

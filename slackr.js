@@ -127,7 +127,7 @@ _.each(config.slack, function(o){
 });
 
 // listen for commands to be executed
-app.post('/slack', function(req,res){
+app.post('/slackr', function(req,res){
   if (req.body.token !== config.slack_config.outgoing_webhook_token){
     res.status(404);
     res.send();
