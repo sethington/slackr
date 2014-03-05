@@ -4,7 +4,7 @@ Middleware to translate incoming POST Webhooks from any service and send the req
 
 Will also listen on /slack for any outgoing webhooks from Slack and react to those commands as defined in config.json
 
-Pull request, issues and feature requests all welcome.
+Pull requests, issues and feature requests all welcome.
 
 ### Configuration - Incoming Webhooks
 The config.json file in the root folder will need to be updated to point to your Incoming Webhooks integration on Slack. Fill in the slack.domain and slack.token fields in config.json to match the integration variables found here: https://my.slack.com/services/new/incoming-webhook
