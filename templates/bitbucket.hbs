@@ -1,0 +1,22 @@
+{{#if pullrequest_created}}
+	<{{pullrequest_created.links.self.href}}|{{pullrequest_created.title}}> created by {{pullrequest_created.author.username}} in {{pullrequest_created.source.repository.full_name}}
+	({{pullrequest_created.source.branch.name}} -&gt; {{pullrequest_created.destination.branch.name}})
+{{/if}}
+{{#if pullrequest_merged}}
+	<{{pullrequest_merged.destination.commit.links.self.href}}|{{pullrequest_merged.title}}> merged by {{pullrequest_merged.author.username}} in {{pullrequest_merged.source.repository.full_name}}
+	({{pullrequest_merged.source.branch.name}} -&gt; {{pullrequest_merged.destination.branch.name}})
+{{/if}}
+{{#if pullrequest_declined}}
+	<{{pullrequest_declined.destination.commit.links.self.href}}|{{pullrequest_declined.title}}> declined by {{pullrequest_declined.author.username}} in {{pullrequest_declined.source.repository.full_name}}
+	({{pullrequest_declined.source.branch.name}} -&gt; {{pullrequest_declined.destination.branch.name}})
+{{/if}}
+{{#if pullrequest_updated}}
+	<{{pullrequest_updated.destination.commit.links.0.href}}|{{pullrequest_updated.title}}> edited by {{pullrequest_updated.author.username}} in {{pullrequest_updated.source.repository.full_name}}
+	({{pullrequest_updated.source.branch.name}} -&gt; {{pullrequest_updated.destination.branch.name}})
+{{/if}}
+{{#if pullrequest_approve}}
+	{{pullrequest_approve.user.username}} has approved a pull request.
+{{/if}}
+{{#if pullrequest_unapprove}}
+	{{pullrequest_unapprove.user.username}} has withdrawn approval on a pull request.
+{{/if}}

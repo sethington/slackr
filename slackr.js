@@ -1,8 +1,6 @@
-
 /**
  * Module dependencies.
  */
-
 var express = require('express');
 var routes = require('./routes');
 var http = require('http');
@@ -22,9 +20,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.bodyParser());
 app.use(express.urlencoded());
+app.use(express.json());
+app.use(express.bodyParser({strict: false}));
+
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -56,6 +55,7 @@ var processRequest = function(route, req, res){
 
 		// bail out if no content was generated
 		if (!_.isString(content) || content === ""){
+      console.log("no content");
 			return;
 		}
 
@@ -75,16 +75,15 @@ var processRequest = function(route, req, res){
 			slack.username = route.username;
 		}
 
-		sendSlackRequest(slack, function(results){
-		});
+		sendSlackRequest(slack, function(results){console.log(results);});
 	});
 };
 
 var sendSlackRequest = function(options, callback){
 	var reqOptions = {
-		hostname: config.slack.domain,
+		hostname: config.slack_config.domain,
 		port: 443,
-		path: config.slack.path+config.slack.token,
+		path: config.slack_config.path+config.slack_config.token,
 		method: "POST"
 	};
 
@@ -101,8 +100,8 @@ var sendSlackRequest = function(options, callback){
 	req.end();
 };
 
-// step through all configured integrations and build out routes
-_.each(config.integrations, function(integration, key){
+// step through all incoming webhooks and build out routes
+_.each(config.webhooks, function(integration, key){
 	_.each(integration.routes, function(route){
 		app.post('/'+key+route.path, function(req,res){
 			processRequest(route, req, res);
@@ -110,6 +109,49 @@ _.each(config.integrations, function(integration, key){
 			res.send({status:"OK"});
 		});
 	});
+});
+
+// build out regex and functions to call
+var outgoingHookCommands = [];
+var required = {};
+_.each(config.slack, function(o){
+  var module = o.module.split('.');
+  if (!_.isObject(required[module[0]])){
+    required[module[0]] = require("./modules/"+module[0]);
+  }
+
+  outgoingHookCommands.push({
+    regex: new RegExp(o.regex,"i"),
+    func: required[module[0]][module[1]]
+  });
+});
+
+// listen for commands to be executed
+app.post('/slack', function(req,res){
+  if (req.body.token !== config.slack_config.outgoing_webhook_token){
+    res.status(404);
+    res.send();
+    return;
+  }
+
+  var content = "",
+      found = false;
+  _.each(outgoingHookCommands, function(o){
+    if (_.isString(req.body.text) && req.body.text.match(o.regex) && _.isFunction(o.func)){
+      found = true;
+      o.func(req.body.text, function(response){
+          res.status(200);
+          res.send({text:response, parse:"full"});
+      });
+      return false; // break loop
+    }
+  });
+
+  // no listener found
+  if (!found){
+    res.status(200);
+    res.send();
+  }
 });
 
 http.createServer(app).listen(app.get('port'), function(){

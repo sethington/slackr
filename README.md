@@ -1,6 +1,8 @@
-## Slack Webhook Middleware  
+## Slackr - Webhook Middleware for Slack
 ---
-Middleware to translate incoming POST Webhooks from any service and send the request on to Slack in its accepted format.
+Middleware to translate incoming POST Webhooks from any service and send the request on to Slack in its accepted format.  
+
+Will also listen on /slack for any outgoing webhooks from Slack and react to those commands as defined in config.json
 
 ### Configuration
 The config.json file in the root folder will need to be updated to point to your Incoming Webhooks integration on Slack. Fill in the slack.domain and slack.token fields in config.json to match the integration variables found here: https://my.slack.com/services/new/incoming-webhook
@@ -16,9 +18,9 @@ route schema:
 * **username _(optional)_** Name to post this message as in the Slack channel  
 
 The translations are created using the Handlebars templating engine. The template will have access to the incoming JSON object from the service and the results of the translation will be sent to the specified Slack channel. Read more on what Handlebars is capable of here: http://handlebarsjs.com/
- 
+
 ### Running
 
 npm install  
 npm install forever -g  
-forever start app.js  
+forever start slackr.js  

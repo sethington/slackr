@@ -1,32 +1,44 @@
 {
-	"port": 3001,
-	"slack":
+	"port": 3000,
+	"slack_config":
 	{
 		"domain":"yoursubdomainhere.slack.com",
-		"token": "INSERT YOUR SLACK WEBHOOK TOKEN HERE",
-		"path":"/services/hooks/incoming-webhook?token="
+		"token": "INSERT YOUR SLACK INCOMING WEBHOOK TOKEN HERE",
+		"path":"/services/hooks/incoming-webhook?token=",
+		"outgoing_webhook_token": "INSERT YOUR SLACK OUTGOING WEBHOOK TOKEN HERE"
 	},
-	"integrations":
+	"webhooks":
 	{
-		"bitbucket": 
+		"bitbucket":
 		{
 			"routes":
 			[
 				{
 					"path": "/pr/created",
-					"channel": "#bitbucket",
+					"channel": "#random",
 					"emoji": ":ghost:",
-					"template": "bitbucket/created.hbs",
+					"template": "bitbucket.hbs",
 					"username":"Bitbucket"
 				},
 				{
 					"path": "/pr/approved",
-					"channel": "#bitbucket",
+					"channel": "#general",
 					"icon": "https://slack.global.ssl.fastly.net/10800/img/services/bitbucket_48.png",
-					"template": "bitbucket/approved.hbs",
+					"template": "bitbucket.hbs",
 					"username":"Bitbucket"
 				}
 			]
 		}
-	}
+	},
+	"slack":
+	[
+		{
+			"regex": "^xkcd today.*",
+			"module": "xkcd.today"
+		},
+		{
+			"regex": "^xkcd$",
+			"module": "xkcd.random"
+		}
+	]
 }
